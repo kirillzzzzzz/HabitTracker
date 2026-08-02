@@ -1,5 +1,8 @@
 import { TRACKERS } from "./config.js";
 import { formatDate } from "./date.js";
+import { renderProgressCard } from "./components/ProgressCard.js";
+import { renderHeader } from "./components/Header.js";
+import { renderHabitList } from "./components/HabitList.js";
 
 export function render(app) {
 
@@ -14,82 +17,25 @@ export function render(app) {
 	const progress =
 		Math.round(completedCount / totalCount * 100);
 
-	const trackersHtml = TRACKERS.map(tracker => {
-
-		const value =
-			app.currentDay.entries[tracker.id].value;
-
-		return `
-
-    <button
-        class="tracker-button"
-        data-tracker="${tracker.id}"
-        style="--tracker-color:${tracker.color}"
-    >
-
-        <span class="tracker-title">
-
-            ${tracker.icon}
-            ${tracker.title}
-
-        </span>
-
-        <span class="tracker-value">
-
-            ${value === null
-				? "○"
-				: value
-					? "❌"
-					: "✅"
-			}
-
-        </span>
-
-    </button>
-
-`;
-
-	}).join("");
-
 	root.innerHTML = `
 
-        <div class="header">
+${renderHeader(
 
-    <h1>Habit Tracker</h1>
+		formatDate(app.currentDay.date)
 
-    <p class="date">
+	)}
 
-        ${formatDate(app.currentDay.date)}
+${renderProgressCard(
 
-    </p>
+		completedCount,
 
-</div>
+		totalCount,
 
-<div class="progress-card">
+		progress
 
-    <div class="progress-info">
+	)}
 
-        <span>Отмечено</span>
+${renderHabitList(app)}
 
-        <strong>
-
-            ${completedCount} / ${totalCount}
-
-        </strong>
-
-    </div>
-
-    <div class="progress">
-
-        <div
-            class="progress-fill"
-            style="width:${progress}%"
-        ></div>
-
-    </div>
-
-</div>
-
-${trackersHtml}
     `;
 }
