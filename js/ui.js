@@ -91,14 +91,5 @@ export function render(app) {
 </div>
 
 ${trackersHtml}
-
-		  <p>
-
-				Сегодня отмечено:
-
-				${completedCount} / ${totalCount}
-
-			</p>
-
     `;
 }
