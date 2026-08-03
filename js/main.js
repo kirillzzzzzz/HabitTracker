@@ -37,40 +37,33 @@ function bindEvents() {
 
 	const appElement = document.querySelector("#app");
 
-	appElement.addEventListener("click", handleClick);
+	appElement.addEventListener("pointerdown", handlePointerDown);
+	appElement.addEventListener("pointerup", handlePointerUp);
+	appElement.addEventListener("pointerleave", handlePointerUp);
+	appElement.addEventListener("pointercancel", handlePointerUp);
 
 }
 
-function handleClick(event) {
+function handlePointerDown(event) {
 
 	const button = event.target.closest(".tracker-action");
 
 	if (!button) {
-
 		return;
-
 	}
 
 	const trackerId = button.dataset.tracker;
-
 	const rawValue = button.dataset.value;
 
 	let value = null;
 
 	if (rawValue === "true") {
-
 		value = true;
-
 	} else if (rawValue === "false") {
-
 		value = false;
-
 	}
 
-	clearPending(trackerId);
-
 	startPending(trackerId);
-
 	commit();
 
 	const timerId = setTimeout(() => {
@@ -78,18 +71,30 @@ function handleClick(event) {
 		setTrackerValue(app, trackerId, value);
 
 		stopPending(trackerId);
-
-		commit();
-
-		stopPending(trackerId);
-
 		clearPending(trackerId);
 
-		startPending(trackerId);
+		commit();
 
 	}, 500);
 
 	setPending(trackerId, timerId);
+
+}
+
+function handlePointerUp(event) {
+
+	const button = event.target.closest(".tracker-action");
+
+	if (!button) {
+		return;
+	}
+
+	const trackerId = button.dataset.tracker;
+
+	clearPending(trackerId);
+	stopPending(trackerId);
+
+	commit();
 
 }
 
