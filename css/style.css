@@ -278,3 +278,15 @@ body {
     font-size: .85rem;
 
 }
+
+.tracker-card.pending {
+
+    opacity: .8;
+
+}
+
+.tracker-card.pending {
+
+    pointer-events: none;
+
+}

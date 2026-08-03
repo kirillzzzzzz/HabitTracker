@@ -3,6 +3,7 @@ import { saveApp, loadApp } from "./storage.js";
 import { createCurrentDay } from "./journal.js";
 import { render } from "./ui.js";
 import { setTrackerValue } from "./tracker.js";
+import { setPending, clearPending, startPending, stopPending } from "./pending.js";
 
 const savedApp = loadApp();
 
@@ -66,9 +67,29 @@ function handleClick(event) {
 
 	}
 
-	setTrackerValue(app, trackerId, value);
+	clearPending(trackerId);
+
+	startPending(trackerId);
 
 	commit();
+
+	const timerId = setTimeout(() => {
+
+		setTrackerValue(app, trackerId, value);
+
+		stopPending(trackerId);
+
+		commit();
+
+		stopPending(trackerId);
+
+		clearPending(trackerId);
+
+		startPending(trackerId);
+
+	}, 500);
+
+	setPending(trackerId, timerId);
 
 }
 

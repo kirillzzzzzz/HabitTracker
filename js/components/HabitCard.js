@@ -1,4 +1,4 @@
-export function renderHabitCard(tracker, value) {
+export function renderHabitCard(tracker, value, pending) {
 
 	const stateClass =
 		value === null
@@ -10,7 +10,7 @@ export function renderHabitCard(tracker, value) {
 	return `
 
         <div
-            class="tracker-card ${stateClass}"
+            class="tracker-card ${stateClass} ${pending ? "pending" : ""}"
             style="--tracker-color:${tracker.color}"
         >
 
