@@ -1,19 +1,10 @@
-export function toggleTracker(app, trackerName) {
+export function setTrackerValue(app, trackerId, value) {
 
-	const entry = app.currentDay.entries[trackerName];
+	const entry = app.currentDay.entries[trackerId];
 
-	if (entry.value === null) {
-
-		entry.value = false;
-
-	} else if (entry.value === false) {
-
-		entry.value = true;
-
-	} else {
-
-		entry.value = null;
-
-	}
+	entry.value =
+		entry.value === value
+			? null
+			: value;
 
 }

@@ -1,32 +1,63 @@
 export function renderHabitCard(tracker, value) {
 
+	const stateClass =
+		value === null
+			? "state-none"
+			: value
+				? "state-success"
+				: "state-danger";
+
 	return `
 
-        <button
-            class="tracker-button"
-            data-tracker="${tracker.id}"
+        <div
+            class="tracker-card ${stateClass}"
             style="--tracker-color:${tracker.color}"
         >
 
-            <span class="tracker-title">
+            <div class="tracker-info">
 
-                ${tracker.icon}
-                ${tracker.title}
+                <div class="tracker-title">
 
-            </span>
+                    ${tracker.icon}
+                    ${tracker.title}
 
-            <span class="tracker-value">
+                </div>
 
-                ${value === null
-			? "○"
-			: value
-				? "❌"
-				: "✅"
-		}
+                <div class="tracker-description">
 
-            </span>
+                    ${tracker.description}
 
-        </button>
+                </div>
+
+            </div>
+
+            <div class="tracker-actions">
+
+                <button
+                    class="tracker-action success ${value === true ? "active" : ""}"
+                    data-tracker="${tracker.id}"
+                    data-value="true"
+                    type="button"
+                >
+
+                    ✓
+
+                </button>
+
+                <button
+                    class="tracker-action danger ${value === false ? "active" : ""}"
+                    data-tracker="${tracker.id}"
+                    data-value="false"
+                    type="button"
+                >
+
+                    ✕
+
+                </button>
+
+            </div>
+
+        </div>
 
     `;
 

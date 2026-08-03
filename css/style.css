@@ -10,11 +10,11 @@
     --success: #22c55e;
     --danger: #ef4444;
 
-    --border-radius: 16px;
+    --border-radius: 20px;
 
     --spacing-xs: 6px;
     --spacing-sm: 10px;
-    --spacing-md: 16px;
+    --spacing-md: 18px;
     --spacing-lg: 24px;
     --spacing-xl: 32px;
 
@@ -59,41 +59,119 @@ body {
 
 }
 
-.tracker-button {
-
-    width: 100%;
+.tracker-card {
 
     display: flex;
 
     justify-content: space-between;
 
-    align-items: center;
+    align-items: stretch;
 
-    padding: var(--spacing-md);
+    overflow: hidden;
 
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 18px;
+
+    border-radius: 22px;
 
     background: var(--surface);
 
-    color: var(--text);
-
-    border: none;
-
-    border-left: 4px solid var(--tracker-color);
-
-    border-radius: var(--border-radius);
-
-    cursor: pointer;
-
-    transition: var(--transition);
+    border-left: 6px solid #495166;
 
 }
 
-.tracker-button:hover {
+.tracker-info {
 
-    background: var(--surface-hover);
+    flex: 1;
 
-    transform: translateY(-2px);
+    padding: 22px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: 6px;
+
+}
+
+.tracker-actions {
+
+    width: 92px;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+.tracker-action {
+
+    flex: 1;
+
+    border: none;
+
+    background: rgba(255,255,255,.05);
+
+    color: var(--text-secondary);
+
+    font-size: 1.6rem;
+
+    cursor: pointer;
+
+    transition: .25s;
+
+}
+
+.tracker-action:first-child {
+
+    border-bottom: 1px solid rgba(255,255,255,.08);
+
+}
+
+.tracker-action:first-child {
+
+    border-bottom: 1px solid rgba(255,255,255,.08);
+
+}
+
+.tracker-action:hover {
+
+    background: rgba(255,255,255,.08);
+
+}
+
+.tracker-action.success.active {
+
+    background: var(--success);
+
+    color: white;
+
+}
+
+.tracker-action.danger.active {
+
+    background: var(--danger);
+
+    color: white;
+
+}
+
+.tracker-card.state-none {
+
+    border-left-color: #495166;
+
+}
+
+.tracker-card.state-success {
+
+    border-left-color: var(--success);
+
+}
+
+.tracker-card.state-danger {
+
+    border-left-color: var(--danger);
 
 }
 
@@ -180,5 +258,23 @@ body {
     background: var(--success);
 
     transition: width .25s ease;
+
+}
+
+.habit-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+}
+
+.tracker-description {
+
+    color: var(--text-secondary);
+
+    font-size: .85rem;
 
 }

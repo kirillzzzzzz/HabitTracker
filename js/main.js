@@ -2,7 +2,7 @@ import { app } from "./app.js";
 import { saveApp, loadApp } from "./storage.js";
 import { createCurrentDay } from "./journal.js";
 import { render } from "./ui.js";
-import { toggleTracker } from "./tracker.js";
+import { setTrackerValue } from "./tracker.js";
 
 const savedApp = loadApp();
 
@@ -28,25 +28,53 @@ function commit() {
 
 function updateUI() {
 
-	const ui = render(app);
+	render(app);
 
-	const trackerButtons =
-		document.querySelectorAll(".tracker-button");
+}
 
-	trackerButtons.forEach(button => {
+function bindEvents() {
 
-		button.addEventListener("click", () => {
+	const appElement = document.querySelector("#app");
 
-			const trackerId = button.dataset.tracker;
+	appElement.addEventListener("click", handleClick);
 
-			toggleTracker(app, trackerId);
+}
 
-			commit();
+function handleClick(event) {
 
-		});
+	const button = event.target.closest(".tracker-action");
 
-	});
+	if (!button) {
+
+		return;
+
+	}
+
+	const trackerId = button.dataset.tracker;
+
+	const rawValue = button.dataset.value;
+
+	let value = null;
+
+	if (rawValue === "true") {
+
+		value = true;
+
+	} else if (rawValue === "false") {
+
+		value = false;
+
+	}
+
+	setTrackerValue(app, trackerId, value);
+
+	commit();
 
 }
 
 commit();
+
+console.log(app);
+console.log(app.currentDay);
+
+bindEvents();

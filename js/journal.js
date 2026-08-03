@@ -9,7 +9,7 @@ export function createCurrentDay() {
 
 		entries[tracker.id] = {
 
-			value: tracker.initialValue
+			value: tracker.value
 
 		};
 
