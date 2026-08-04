@@ -1,3 +1,4 @@
+// Поработал
 export function renderHabitCard(tracker, value, pending) {
 
 	const stateClass =
@@ -34,26 +35,38 @@ export function renderHabitCard(tracker, value, pending) {
             <div class="tracker-actions">
 
                 <button
-                    class="tracker-action success ${value === true ? "active" : ""}"
-                    data-tracker="${tracker.id}"
-                    data-value="true"
-                    type="button"
-                >
+						class="tracker-action success ${value === true ? "active" : ""}"
+						data-tracker="${tracker.id}"
+						data-value="true"
+						type="button"
+					>
 
-                    ✓
+						<span class="tracker-action-fill"></span>
 
-                </button>
+						<span class="tracker-action-icon">
+
+							✓
+
+						</span>
+
+					</button>
 
                 <button
-                    class="tracker-action danger ${value === false ? "active" : ""}"
-                    data-tracker="${tracker.id}"
-                    data-value="false"
-                    type="button"
-                >
+						class="tracker-action danger ${value === false ? "active" : ""}"
+						data-tracker="${tracker.id}"
+						data-value="false"
+						type="button"
+					>
 
-                    ✕
+						<span class="tracker-action-fill"></span>
 
-                </button>
+						<span class="tracker-action-icon">
+
+							✕
+
+						</span>
+
+					</button>
 
             </div>
 

@@ -121,6 +121,10 @@ body {
 
     transition: .25s;
 
+	 position:relative;
+
+    overflow:hidden;
+
 }
 
 .tracker-action:first-child {
@@ -154,6 +158,30 @@ body {
     background: var(--danger);
 
     color: white;
+
+}
+
+.tracker-action-fill{
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    width:0%;
+
+    height:100%;
+
+    background:rgba(255,255,255,.12);
+
+}
+
+.tracker-action-icon{
+
+    position:relative;
+
+    z-index:2;
 
 }
 
@@ -276,17 +304,5 @@ body {
     color: var(--text-secondary);
 
     font-size: .85rem;
-
-}
-
-.tracker-card.pending {
-
-    opacity: .8;
-
-}
-
-.tracker-card.pending {
-
-    pointer-events: none;
 
 }
