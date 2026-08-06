@@ -100,7 +100,4 @@ function handlePointerUp(event) {
 
 commit();
 
-console.log(app);
-console.log(app.currentDay);
-
 bindEvents();
