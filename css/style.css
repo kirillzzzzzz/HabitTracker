@@ -124,6 +124,8 @@ body {
 	 position:relative;
 
     overflow:hidden;
+	
+	 z-index:0;
 
 }
 
@@ -177,11 +179,11 @@ body {
 
 }
 
-.tracker-action-icon{
+.tracker-action-icon {
 
     position:relative;
 
-    z-index:2;
+    z-index:1;
 
 }
 
@@ -312,5 +314,29 @@ body {
     opacity: .7;
 
     transform: scale(.96);
+
+}
+
+.tracker-action::before {
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:0;
+
+    height:100%;
+
+    width:calc(var(--progress,0) * 100%);
+
+    background:var(--fill-color);
+
+    transition:none;
+
+	 opacity:.75;
+
+	 transition:none;
 
 }

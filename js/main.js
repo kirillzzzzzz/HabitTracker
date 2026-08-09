@@ -4,8 +4,11 @@ import { createCurrentDay } from "./journal.js";
 import { render } from "./ui.js";
 import { setTrackerValue } from "./tracker.js";
 import { setPending, clearPending, startPending, stopPending } from "./pending.js";
+import { startHold, cancelHold } from "./hold.js";
 
 const savedApp = loadApp();
+
+let currentHold = null;
 
 if (savedApp) {
 
@@ -46,55 +49,98 @@ function bindEvents() {
 
 function handlePointerDown(event) {
 
-	const button = event.target.closest(".tracker-action");
 
-	if (!button) {
-		return;
-	}
+	const button =
+		event.target.closest(".tracker-action");
 
-	const trackerId = button.dataset.tracker;
-	const rawValue = button.dataset.value;
 
-	let value = null;
+	if (!button) return;
 
-	if (rawValue === "true") {
-		value = true;
-	} else if (rawValue === "false") {
-		value = false;
-	}
 
-	startPending(trackerId);
-	commit();
+	const trackerId =
+		button.dataset.tracker;
 
-	const timerId = setTimeout(() => {
 
-		setTrackerValue(app, trackerId, value);
+	const value =
+		button.dataset.value === "true";
 
-		stopPending(trackerId);
-		clearPending(trackerId);
 
-		commit();
+	currentHold = {
 
-	}, 500);
+		trackerId,
 
-	setPending(trackerId, timerId);
+		value
+
+	};
+
+
+	startHold(
+
+		progress => {
+
+			button.style.setProperty(
+				"--progress",
+				progress
+			);
+
+		},
+
+
+		() => {
+
+
+			setTrackerValue(
+				app,
+				trackerId,
+				value
+			);
+
+
+			commit();
+
+
+			currentHold = null;
+
+
+		}
+
+	);
+
 
 }
 
-function handlePointerUp(event) {
+function handlePointerUp() {
 
-	const button = event.target.closest(".tracker-action");
 
-	if (!button) {
-		return;
-	}
+	if (!currentHold) return;
 
-	const trackerId = button.dataset.tracker;
 
-	clearPending(trackerId);
-	stopPending(trackerId);
+	cancelHold(
 
-	commit();
+		() => {
+
+			const button =
+				document.querySelector(
+					`[data-tracker="${currentHold.trackerId}"][data-value="${currentHold.value}"]`
+				);
+
+
+			if (button) {
+
+				button.style.setProperty(
+					"--progress",
+					0
+				);
+
+			}
+
+
+		}
+
+	);
+
+
+	currentHold = null;
 
 }
 

@@ -44,12 +44,8 @@ export function renderHabitCard(tracker, value, pending) {
             <div class="tracker-actions">
 
                 <button
-						class="
-						tracker-action 
-						success 
-						${value === true ? "active" : ""}
-						${pending?.value === true ? "pending" : ""}
-						"
+						class="tracker-action success ${value === true ? "active" : ""}${pending?.value === true ? "pending" : ""}"
+						style="--fill-color: var(--success)"
 						data-tracker="${tracker.id}"
 						data-value="true"
 						type="button"
@@ -72,6 +68,7 @@ export function renderHabitCard(tracker, value, pending) {
 						${value === false ? "active" : ""}
 						${pending?.value === false ? "pending" : ""}
 						"
+						style="--fill-color:var(--danger)"
 						data-tracker="${tracker.id}"
 						data-value="false"
 						type="button"
