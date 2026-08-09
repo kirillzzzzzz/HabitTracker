@@ -24,9 +24,13 @@ export function clearPending(trackerId) {
 
 }
 
-export function startPending(trackerId) {
+export function startPending(trackerId, value) {
 
-	pendingStates.set(trackerId, true);
+	pendingStates.set(trackerId, {
+
+		value
+
+	});
 
 }
 
@@ -36,8 +40,8 @@ export function stopPending(trackerId) {
 
 }
 
-export function isPending(trackerId) {
+export function getPending(trackerId) {
 
-	return pendingStates.has(trackerId);
+	return pendingStates.get(trackerId) ?? null;
 
 }

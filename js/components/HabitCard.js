@@ -8,10 +8,19 @@ export function renderHabitCard(tracker, value, pending) {
 				? "state-success"
 				: "state-danger";
 
+
+	const pendingClass =
+		!pending
+			? ""
+			: pending.value
+				? "pending-success"
+				: "pending-danger";
+
 	return `
 
         <div
-            class="tracker-card ${stateClass} ${pending ? "pending" : ""}"
+            <div
+					class="tracker-card ${stateClass} ${pendingClass}"
             style="--tracker-color:${tracker.color}"
         >
 
@@ -35,7 +44,12 @@ export function renderHabitCard(tracker, value, pending) {
             <div class="tracker-actions">
 
                 <button
-						class="tracker-action success ${value === true ? "active" : ""}"
+						class="
+						tracker-action 
+						success 
+						${value === true ? "active" : ""}
+						${pending?.value === true ? "pending" : ""}
+						"
 						data-tracker="${tracker.id}"
 						data-value="true"
 						type="button"
@@ -52,7 +66,12 @@ export function renderHabitCard(tracker, value, pending) {
 					</button>
 
                 <button
-						class="tracker-action danger ${value === false ? "active" : ""}"
+						class="
+						tracker-action 
+						danger 
+						${value === false ? "active" : ""}
+						${pending?.value === false ? "pending" : ""}
+						"
 						data-tracker="${tracker.id}"
 						data-value="false"
 						type="button"

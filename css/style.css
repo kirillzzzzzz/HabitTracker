@@ -306,3 +306,11 @@ body {
     font-size: .85rem;
 
 }
+
+.tracker-action.pending {
+
+    opacity: .7;
+
+    transform: scale(.96);
+
+}
