@@ -49,7 +49,6 @@ function bindEvents() {
 
 function handlePointerDown(event) {
 
-
 	const button =
 		event.target.closest(".tracker-action");
 
@@ -65,11 +64,36 @@ function handlePointerDown(event) {
 		button.dataset.value === "true";
 
 
+	const currentValue =
+		app.currentDay.entries[trackerId].value;
+
+
+	const reverse =
+		currentValue === value;
+
+	const startProgress =
+		reverse ? 1 : 0;
+
+	button.style.setProperty(
+		"--progress",
+		startProgress
+	);
+
+	button.style.setProperty(
+		"--glow",
+		startProgress
+	);
+
+
 	currentHold = {
 
 		trackerId,
 
-		value
+		value,
+
+		reverse,
+
+		button
 
 	};
 
@@ -83,59 +107,73 @@ function handlePointerDown(event) {
 				progress
 			);
 
+
+			button.style.setProperty(
+				"--glow",
+				progress
+			);
+
 		},
 
 
 		() => {
 
+			const nextValue =
+				reverse
+					? null
+					: value;
+
 
 			setTrackerValue(
 				app,
 				trackerId,
-				value
+				nextValue
 			);
-
 
 			commit();
 
 
 			currentHold = null;
 
+		},
 
-		}
+
+		reverse
 
 	);
-
 
 }
 
 function handlePointerUp() {
 
-
 	if (!currentHold) return;
+
+
+	const {
+		button,
+		reverse
+	} = currentHold;
 
 
 	cancelHold(
 
-		() => {
+		progress => {
 
-			const button =
-				document.querySelector(
-					`[data-tracker="${currentHold.trackerId}"][data-value="${currentHold.value}"]`
-				);
-
-
-			if (button) {
-
-				button.style.setProperty(
-					"--progress",
-					0
-				);
-
-			}
+			button.style.setProperty(
+				"--progress",
+				progress
+			);
 
 
-		}
+			button.style.setProperty(
+				"--glow",
+				progress
+			);
+
+		},
+
+
+		reverse
 
 	);
 

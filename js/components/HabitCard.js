@@ -1,6 +1,7 @@
 // Поработал
 export function renderHabitCard(tracker, value, pending) {
 
+
 	const stateClass =
 		value === null
 			? "state-none"
@@ -10,19 +11,17 @@ export function renderHabitCard(tracker, value, pending) {
 
 
 	const pendingClass =
-		!pending
-			? ""
-			: pending.value
-				? "pending-success"
-				: "pending-danger";
+		pending
+			? "pending"
+			: "";
+
 
 	return `
 
-        <div
-            <div
-					class="tracker-card ${stateClass} ${pendingClass}"
-            style="--tracker-color:${tracker.color}"
-        >
+<div
+    class="tracker-card ${stateClass} ${pendingClass}"
+    style="--tracker-color:${tracker.color}"
+>
 
             <div class="tracker-info">
 
@@ -44,37 +43,42 @@ export function renderHabitCard(tracker, value, pending) {
             <div class="tracker-actions">
 
                 <button
-						class="tracker-action success ${value === true ? "active" : ""}${pending?.value === true ? "pending" : ""}"
-						style="--fill-color: var(--success)"
+						class="
+							tracker-action
+							success
+							${value === true ? "active" : ""}
+							${pending?.value === true ? "pending" : ""}
+						"
+						style="
+							--fill-color:var(--success);
+							--progress:${value === true ? 1 : 0};
+						"
 						data-tracker="${tracker.id}"
 						data-value="true"
 						type="button"
 					>
 
-						<span class="tracker-action-fill"></span>
-
 						<span class="tracker-action-icon">
-
 							✓
-
 						</span>
 
 					</button>
 
                 <button
 						class="
-						tracker-action 
-						danger 
-						${value === false ? "active" : ""}
-						${pending?.value === false ? "pending" : ""}
+							tracker-action
+							danger
+							${value === false ? "active" : ""}
+							${pending?.value === false ? "pending" : ""}
 						"
-						style="--fill-color:var(--danger)"
+						style="
+							--fill-color:var(--danger);
+							--progress:${value === false ? 1 : 0};
+						"
 						data-tracker="${tracker.id}"
 						data-value="false"
 						type="button"
 					>
-
-						<span class="tracker-action-fill"></span>
 
 						<span class="tracker-action-icon">
 

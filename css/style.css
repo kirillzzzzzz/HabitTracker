@@ -127,6 +127,18 @@ body {
 	
 	 z-index:0;
 
+	 transition:
+       transform .15s ease,
+       box-shadow .2s ease;
+
+}
+
+.tracker-action.success {
+    --fill-color: var(--success);
+}
+
+.tracker-action.danger {
+    --fill-color: var(--danger);
 }
 
 .tracker-action:first-child {
@@ -147,36 +159,8 @@ body {
 
 }
 
-.tracker-action.success.active {
-
-    background: var(--success);
-
+.tracker-action.active {
     color: white;
-
-}
-
-.tracker-action.danger.active {
-
-    background: var(--danger);
-
-    color: white;
-
-}
-
-.tracker-action-fill{
-
-    position:absolute;
-
-    left:0;
-
-    top:0;
-
-    width:0%;
-
-    height:100%;
-
-    background:rgba(255,255,255,.12);
-
 }
 
 .tracker-action-icon {
@@ -313,30 +297,25 @@ body {
 
     opacity: .7;
 
-    transform: scale(.96);
+	 transform: scale(.94);
+
+	 box-shadow:
+        0 0 calc(8px + (20px * var(--glow,0)))
+        var(--fill-color);
 
 }
 
 .tracker-action::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
 
-    content:"";
+    width: calc(var(--progress, 0) * 100%);
+    height: 100%;
 
-    position:absolute;
+    background: var(--fill-color);
+    opacity: .75;
 
-    left:0;
-
-    bottom:0;
-
-    height:100%;
-
-    width:calc(var(--progress,0) * 100%);
-
-    background:var(--fill-color);
-
-    transition:none;
-
-	 opacity:.75;
-
-	 transition:none;
-
+    transition: none;
 }
