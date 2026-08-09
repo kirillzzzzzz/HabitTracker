@@ -1,47 +1,24 @@
-const pendingTimers = new Map();
+const pending = new Map();
 
-const pendingStates = new Map();
 
-export function setPending(trackerId, timerId) {
+export function setPending(trackerId, value) {
 
-	clearPending(trackerId);
-
-	pendingTimers.set(trackerId, timerId);
-
-}
-
-export function clearPending(trackerId) {
-
-	const timerId = pendingTimers.get(trackerId);
-
-	if (timerId) {
-
-		clearTimeout(timerId);
-
-		pendingTimers.delete(trackerId);
-
-	}
-
-}
-
-export function startPending(trackerId, value) {
-
-	pendingStates.set(trackerId, {
-
+	pending.set(trackerId, {
 		value
-
 	});
 
 }
 
-export function stopPending(trackerId) {
-
-	pendingStates.delete(trackerId);
-
-}
 
 export function getPending(trackerId) {
 
-	return pendingStates.get(trackerId) ?? null;
+	return pending.get(trackerId) ?? null;
+
+}
+
+
+export function clearPending(trackerId) {
+
+	pending.delete(trackerId);
 
 }

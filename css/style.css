@@ -319,3 +319,11 @@ body {
 
     transition: none;
 }
+
+.tracker-card.pending-success {
+    border-left-color: var(--success);
+}
+
+.tracker-card.pending-danger {
+    border-left-color: var(--danger);
+}

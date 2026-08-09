@@ -3,8 +3,12 @@ import { saveApp, loadApp } from "./storage.js";
 import { createCurrentDay } from "./journal.js";
 import { render } from "./ui.js";
 import { setTrackerValue } from "./tracker.js";
-import { setPending, clearPending, startPending, stopPending } from "./pending.js";
 import { startHold, cancelHold } from "./hold.js";
+import {
+	setPending,
+	clearPending,
+	getPending
+} from "./pending.js";
 
 const savedApp = loadApp();
 
@@ -47,6 +51,41 @@ function bindEvents() {
 
 }
 
+function updatePendingUI(
+	trackerId,
+	value
+) {
+
+	const card =
+		document.querySelector(
+			`.tracker-card[data-tracker="${trackerId}"]`
+		);
+
+	if (!card) return;
+
+
+	card.classList.remove(
+		"pending-success",
+		"pending-danger"
+	);
+
+
+	if (value === true) {
+
+		card.classList.add(
+			"pending-success"
+		);
+
+	} else {
+
+		card.classList.add(
+			"pending-danger"
+		);
+
+	}
+
+}
+
 function handlePointerDown(event) {
 
 	const button =
@@ -70,6 +109,16 @@ function handlePointerDown(event) {
 
 	const reverse =
 		currentValue === value;
+
+	setPending(
+		trackerId,
+		value
+	);
+
+	updatePendingUI(
+		trackerId,
+		value
+	);
 
 	const startProgress =
 		reverse ? 1 : 0;
@@ -130,6 +179,10 @@ function handlePointerDown(event) {
 				nextValue
 			);
 
+			clearPending(
+				trackerId
+			);
+
 			commit();
 
 
@@ -150,6 +203,7 @@ function handlePointerUp() {
 
 
 	const {
+		trackerId,
 		button,
 		reverse
 	} = currentHold;
@@ -172,10 +226,30 @@ function handlePointerUp() {
 
 		},
 
-
 		reverse
 
 	);
+
+
+	clearPending(
+		trackerId
+	);
+
+
+	const card =
+		document.querySelector(
+			`.tracker-card[data-tracker="${trackerId}"]`
+		);
+
+
+	if (card) {
+
+		card.classList.remove(
+			"pending-success",
+			"pending-danger"
+		);
+
+	}
 
 
 	currentHold = null;

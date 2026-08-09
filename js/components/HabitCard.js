@@ -20,6 +20,7 @@ export function renderHabitCard(tracker, value, pending) {
 
 <div
     class="tracker-card ${stateClass} ${pendingClass}"
+	 data-tracker="${tracker.id}"
     style="--tracker-color:${tracker.color}"
 >
 
