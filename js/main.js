@@ -252,6 +252,6 @@ function handlePointerUp() {
 
 }
 
-commit();
+updateUI();
 
 bindEvents();
