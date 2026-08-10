@@ -12,7 +12,10 @@ export function setPending(trackerId, value) {
 
 export function getPending(trackerId) {
 
-	return pending.get(trackerId) ?? null;
+	const result =
+		pending.get(trackerId) ?? null;
+
+	return result;
 
 }
 

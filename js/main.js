@@ -146,7 +146,6 @@ function handlePointerDown(event) {
 
 	};
 
-
 	startHold(
 
 		progress => {
@@ -171,7 +170,6 @@ function handlePointerDown(event) {
 				reverse
 					? null
 					: value;
-
 
 			setTrackerValue(
 				app,
@@ -200,7 +198,6 @@ function handlePointerDown(event) {
 function handlePointerUp() {
 
 	if (!currentHold) return;
-
 
 	const {
 		trackerId,
@@ -234,7 +231,6 @@ function handlePointerUp() {
 	clearPending(
 		trackerId
 	);
-
 
 	const card =
 		document.querySelector(
