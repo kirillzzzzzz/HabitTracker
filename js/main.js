@@ -28,7 +28,13 @@ if (!app.currentDay) {
 
 function commit() {
 
-	saveApp(app);
+	const saved = saveApp(app);
+
+	if (!saved) {
+
+		return;
+
+	}
 
 	updateUI();
 
