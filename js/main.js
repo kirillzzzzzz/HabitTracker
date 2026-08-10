@@ -3,11 +3,7 @@ import { saveApp, loadApp } from "./storage.js";
 import { render } from "./ui.js";
 import { setTrackerValue } from "./tracker.js";
 import { startHold, cancelHold } from "./hold.js";
-import {
-	setPending,
-	clearPending,
-	getPending
-} from "./pending.js";
+import { setPending, clearPending, getPending } from "./pending.js";
 import { createCurrentDay } from "./journal.js";
 
 const savedApp = loadApp();

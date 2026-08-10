@@ -1,7 +1,7 @@
 import { getToday } from "./date.js";
 import { TRACKERS } from "./config.js";
 
-export function createCurrentDay() {
+export function createDay(date) {
 
 	const entries = {};
 
@@ -17,11 +17,17 @@ export function createCurrentDay() {
 
 	return {
 
-		date: getToday(),
+		date,
 
 		entries
 
 	};
+
+}
+
+export function createCurrentDay() {
+
+	return createDay(getToday());
 
 }
 
@@ -30,5 +36,13 @@ export function saveDayToJournal(app) {
 	const date = app.currentDay.date;
 
 	app.journal[date] = structuredClone(app.currentDay);
+
+}
+
+export function closeCurrentDay(app) {
+
+	saveDayToJournal(app);
+
+	app.currentDay = createCurrentDay();
 
 }
