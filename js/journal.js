@@ -24,3 +24,11 @@ export function createCurrentDay() {
 	};
 
 }
+
+export function saveDayToJournal(app) {
+
+	const date = app.currentDay.date;
+
+	app.journal[date] = structuredClone(app.currentDay);
+
+}
