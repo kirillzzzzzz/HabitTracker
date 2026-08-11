@@ -3,23 +3,8 @@ import { saveApp, loadApp } from "./storage.js";
 import { render } from "./ui.js";
 import { setTrackerValue } from "./tracker.js";
 import { startHold, cancelHold } from "./hold.js";
-import {
-	setPending,
-	clearPending,
-	getPending
-} from "./pending.js";
-
-// import {
-// 	createCurrentDay,
-// 	closeCurrentDay
-// } from "./journal.js";
-import {
-	createCurrentDay,
-	createDay,
-	closeCurrentDay,
-	ensureCurrentDay
-} from "./journal.js";
-import { getToday } from "./date.js";
+import { setPending, clearPending } from "./pending.js";
+import { ensureCurrentDay } from "./journal.js";
 
 
 const savedApp = loadApp();
@@ -35,11 +20,6 @@ if (savedApp) {
 }
 
 ensureCurrentDay(app);
-
-console.log("🧪 AFTER ENSURE:", {
-	currentDay: structuredClone(app.currentDay),
-	journal: structuredClone(app.journal)
-});
 
 function commit() {
 
