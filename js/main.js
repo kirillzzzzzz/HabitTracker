@@ -3,12 +3,30 @@ import { saveApp, loadApp } from "./storage.js";
 import { render } from "./ui.js";
 import { setTrackerValue } from "./tracker.js";
 import { startHold, cancelHold } from "./hold.js";
-import { setPending, clearPending, getPending } from "./pending.js";
-import { createCurrentDay } from "./journal.js";
+import {
+	setPending,
+	clearPending,
+	getPending
+} from "./pending.js";
+
+// import {
+// 	createCurrentDay,
+// 	closeCurrentDay
+// } from "./journal.js";
+import {
+	createCurrentDay,
+	createDay,
+	closeCurrentDay,
+	ensureCurrentDay
+} from "./journal.js";
+import { getToday } from "./date.js";
+
 
 const savedApp = loadApp();
 
+
 let currentHold = null;
+
 
 if (savedApp) {
 
@@ -16,11 +34,12 @@ if (savedApp) {
 
 }
 
-if (!app.currentDay) {
+ensureCurrentDay(app);
 
-	app.currentDay = createCurrentDay();
-
-}
+console.log("🧪 AFTER ENSURE:", {
+	currentDay: structuredClone(app.currentDay),
+	journal: structuredClone(app.journal)
+});
 
 function commit() {
 
@@ -36,22 +55,42 @@ function commit() {
 
 }
 
+
 function updateUI() {
 
 	render(app);
 
 }
 
+
 function bindEvents() {
 
-	const appElement = document.querySelector("#app");
+	const appElement =
+		document.querySelector("#app");
 
-	appElement.addEventListener("pointerdown", handlePointerDown);
-	appElement.addEventListener("pointerup", handlePointerUp);
-	appElement.addEventListener("pointerleave", handlePointerUp);
-	appElement.addEventListener("pointercancel", handlePointerUp);
+
+	appElement.addEventListener(
+		"pointerdown",
+		handlePointerDown
+	);
+
+	appElement.addEventListener(
+		"pointerup",
+		handlePointerUp
+	);
+
+	appElement.addEventListener(
+		"pointerleave",
+		handlePointerUp
+	);
+
+	appElement.addEventListener(
+		"pointercancel",
+		handlePointerUp
+	);
 
 }
+
 
 function updatePendingUI(
 	trackerId,
@@ -62,6 +101,7 @@ function updatePendingUI(
 		document.querySelector(
 			`.tracker-card[data-tracker="${trackerId}"]`
 		);
+
 
 	if (!card) return;
 
@@ -88,6 +128,7 @@ function updatePendingUI(
 
 }
 
+
 function handlePointerDown(event) {
 
 	const button =
@@ -112,23 +153,28 @@ function handlePointerDown(event) {
 	const reverse =
 		currentValue === value;
 
+
 	setPending(
 		trackerId,
 		value
 	);
+
 
 	updatePendingUI(
 		trackerId,
 		value
 	);
 
+
 	const startProgress =
 		reverse ? 1 : 0;
+
 
 	button.style.setProperty(
 		"--progress",
 		startProgress
 	);
+
 
 	button.style.setProperty(
 		"--glow",
@@ -147,6 +193,7 @@ function handlePointerDown(event) {
 		button
 
 	};
+
 
 	startHold(
 
@@ -173,15 +220,18 @@ function handlePointerDown(event) {
 					? null
 					: value;
 
+
 			setTrackerValue(
 				app,
 				trackerId,
 				nextValue
 			);
 
+
 			clearPending(
 				trackerId
 			);
+
 
 			commit();
 
@@ -197,9 +247,11 @@ function handlePointerDown(event) {
 
 }
 
+
 function handlePointerUp() {
 
 	if (!currentHold) return;
+
 
 	const {
 		trackerId,
@@ -234,6 +286,7 @@ function handlePointerUp() {
 		trackerId
 	);
 
+
 	const card =
 		document.querySelector(
 			`.tracker-card[data-tracker="${trackerId}"]`
@@ -253,6 +306,7 @@ function handlePointerUp() {
 	currentHold = null;
 
 }
+
 
 updateUI();
 
