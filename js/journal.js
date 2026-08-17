@@ -116,3 +116,73 @@ export function getJournalEntries(app) {
 	}));
 
 }
+
+export function getJournalValue(app, date, trackerId) {
+
+	const day = getJournalDay(app, date);
+
+	if (!day) {
+		return null;
+	}
+
+	return day.entries[trackerId]?.value ?? null;
+}
+
+export function getJournalDayStatus(app, date, trackerId) {
+
+	const today = getToday();
+
+	if (date > today) {
+		return "future";
+	}
+
+	if (date === today) {
+
+		const value =
+			app.currentDay.entries[trackerId]?.value ?? null;
+
+		if (value === true) {
+			return "success";
+		}
+
+		if (value === false) {
+			return "danger";
+		}
+
+		return "empty";
+	}
+
+	const day = getJournalDay(app, date);
+
+	if (!day) {
+		return "not-recorded";
+	}
+
+	const value =
+		day.entries[trackerId]?.value ?? null;
+
+	if (value === true) {
+		return "success";
+	}
+
+	if (value === false) {
+		return "danger";
+	}
+
+	return "missed";
+}
+
+export function getMissedDates(app) {
+
+	const today = getToday();
+
+	return getJournalDates(app)
+		.filter(date => date < today)
+		.filter(date => {
+
+			const day = app.journal[date];
+
+			return Object.values(day.entries)
+				.every(entry => entry.value === null);
+		});
+}

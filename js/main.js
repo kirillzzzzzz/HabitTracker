@@ -4,7 +4,11 @@ import { render } from "./ui.js";
 import { setTrackerValue } from "./tracker.js";
 import { startHold, cancelHold } from "./hold.js";
 import { setPending, clearPending } from "./pending.js";
-import { ensureCurrentDay } from "./journal.js";
+import {
+	ensureCurrentDay, getJournalDates,
+	getJournalDayStatus,
+	getMissedDates
+} from "./journal.js";
 
 
 const savedApp = loadApp();
