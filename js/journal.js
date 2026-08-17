@@ -91,3 +91,28 @@ export function ensureCurrentDay(app) {
 	}
 
 }
+
+export function getJournalDay(app, date) {
+
+	return app.journal[date] ?? null;
+
+}
+
+export function getJournalDates(app) {
+
+	return Object.keys(app.journal)
+		.sort()
+		.reverse();
+
+}
+
+export function getJournalEntries(app) {
+
+	const dates = getJournalDates(app);
+
+	return dates.map(date => ({
+		date,
+		day: getJournalDay(app, date)
+	}));
+
+}

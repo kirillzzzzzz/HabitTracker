@@ -9,9 +9,7 @@ import { ensureCurrentDay } from "./journal.js";
 
 const savedApp = loadApp();
 
-
 let currentHold = null;
-
 
 if (savedApp) {
 
