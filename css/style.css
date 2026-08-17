@@ -327,3 +327,77 @@ body {
 .tracker-card.pending-danger {
     border-left-color: var(--danger);
 }
+
+.hidden {
+	display: none;
+}
+
+
+.modal {
+	position: fixed;
+
+	inset: 0;
+
+	display: flex;
+
+	align-items: center;
+	justify-content: center;
+
+	padding: 20px;
+
+	background: rgba(0, 0, 0, 0.5);
+
+	z-index: 1000;
+}
+
+
+.modal.hidden {
+	display: none;
+}
+
+
+.modal-content {
+	width: min(
+		500px,
+		100%
+	);
+
+	box-sizing: border-box;
+
+	padding: 20px;
+
+	background: white;
+
+	border-radius: 16px;
+}
+
+
+.journal-modal-header {
+	display: flex;
+
+	align-items: center;
+	justify-content: space-between;
+}
+
+
+.journal-modal-header h2 {
+	margin: 0;
+}
+
+
+#journal-close {
+	border: none;
+
+	background: transparent;
+
+	font-size: 28px;
+
+	cursor: pointer;
+}
+
+.progress-actions {
+	display: flex;
+	justify-content: flex-end;
+
+	margin-bottom: 8px;
+}

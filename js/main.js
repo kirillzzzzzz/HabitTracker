@@ -9,6 +9,7 @@ import {
 	getJournalDayStatus,
 	getMissedDates
 } from "./journal.js";
+import { renderJournalModal } from "./components/JournalModal.js";
 
 
 const savedApp = loadApp();
@@ -37,18 +38,23 @@ function commit() {
 
 }
 
-
 function updateUI() {
 
 	render(app);
 
-}
+	bindJournalEvents();
 
+}
 
 function bindEvents() {
 
 	const appElement =
 		document.querySelector("#app");
+
+	appElement.addEventListener(
+		"click",
+		handleAppClick
+	);
 
 
 	appElement.addEventListener(
@@ -72,7 +78,6 @@ function bindEvents() {
 	);
 
 }
-
 
 function updatePendingUI(
 	trackerId,
@@ -109,7 +114,6 @@ function updatePendingUI(
 	}
 
 }
-
 
 function handlePointerDown(event) {
 
@@ -229,7 +233,6 @@ function handlePointerDown(event) {
 
 }
 
-
 function handlePointerUp() {
 
 	if (!currentHold) return;
@@ -287,6 +290,132 @@ function handlePointerUp() {
 
 	currentHold = null;
 
+}
+
+function bindJournalEvents() {
+
+	const journalButton =
+		document.querySelector(
+			"#journal-button"
+		);
+
+
+	const journalClose =
+		document.querySelector(
+			"#journal-close"
+		);
+
+
+	journalButton?.addEventListener(
+		"click",
+		openJournalModal
+	);
+
+
+	journalClose?.addEventListener(
+		"click",
+		closeJournalModal
+	);
+
+}
+
+function openJournalModal() {
+
+	const existingModal =
+		document.querySelector(".journal-modal");
+
+	if (existingModal) {
+		return;
+	}
+
+	const modal = renderJournalModal(app);
+
+	document.body.appendChild(modal);
+
+	bindJournalModalEvents(modal);
+}
+
+function closeJournalModal() {
+
+	const modal =
+		document.querySelector(".modal-overlay");
+
+	if (!modal) {
+		return;
+	}
+
+	modal.remove();
+}
+
+function bindJournalModalEvents(modal) {
+
+	const closeButton =
+		modal.querySelector(
+			'[data-action="close-journal"]'
+		);
+
+	closeButton.addEventListener(
+		"click",
+		closeJournalModal
+	);
+
+	const trackerSelect =
+		modal.querySelector(
+			"#journal-tracker"
+		);
+
+	trackerSelect.addEventListener(
+		"change",
+		event => {
+
+			console.log(
+				"🧪 JOURNAL TRACKER:",
+				event.target.value
+			);
+
+		}
+	);
+
+	const tabs =
+		modal.querySelectorAll(
+			".journal-tab"
+		);
+
+	tabs.forEach(tab => {
+
+		tab.addEventListener(
+			"click",
+			() => {
+
+				tabs.forEach(item => {
+					item.classList.remove("active");
+				});
+
+				tab.classList.add("active");
+
+				console.log(
+					"🧪 JOURNAL MONTH:",
+					tab.dataset.month
+				);
+
+			}
+		);
+
+	});
+}
+
+function handleAppClick(event) {
+
+	const journalButton =
+		event.target.closest(
+			'[data-action="open-journal"]'
+		);
+
+	if (!journalButton) {
+		return;
+	}
+
+	openJournalModal();
 }
 
 
