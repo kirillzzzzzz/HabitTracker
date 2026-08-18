@@ -118,11 +118,15 @@ export function renderJournalModal(
 
 			<div class="journal-records">
 
-				<div class="journal-record">
+				<div class="journal-record journal-streak-record">
 
-					<span>
-						✓ Подряд
-					</span>
+					<div class="journal-record-label">
+
+						<span class="journal-streak-icon">✓</span>
+
+						<span>Дней подряд:</span>
+
+					</div>
 
 					<strong>
 						0
@@ -134,7 +138,7 @@ export function renderJournalModal(
 				<div class="journal-record">
 
 					<span>
-						🏆 Рекорд
+						🏆 Рекорд:
 					</span>
 
 					<strong>

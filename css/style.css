@@ -474,7 +474,14 @@ body {
 
 .modal-overlay {
 	position: fixed;
-	inset: 0;
+
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+	width: 100vw;
+	height: 100vh;
 
 	z-index: 1000;
 
@@ -484,16 +491,19 @@ body {
 
 	padding: 20px;
 
-	background: rgba(0, 0, 0, 0.65);
-
 	box-sizing: border-box;
+
+	background: rgba(0, 0, 0, 0.65);
 }
 
 
 .journal-modal {
+	display: block;
 	width: 100%;
 	max-width: 420px;
 	max-height: calc(100vh - 40px);
+
+	margin: 0 auto;
 
 	overflow-y: auto;
 
@@ -501,13 +511,9 @@ body {
 
 	box-sizing: border-box;
 
-	border-radius: 20px;
-
 	background: #111827;
 	color: #f3f4f6;
 
-	box-shadow:
-		0 20px 60px rgba(0, 0, 0, 0.45);
 }
 
 
@@ -937,4 +943,111 @@ body {
 	flex-direction: column;
 
 	width: 100%;
+}
+
+/* =================================
+   JOURNAL RECORDS
+================================= */
+
+.journal-record-label {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+
+.journal-streak-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 22px;
+	height: 22px;
+
+	flex-shrink: 0;
+
+	border-radius: 4px;
+
+	background: #22c55e;
+	color: #ffffff;
+
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1;
+}
+
+/* =================================
+   JOURNAL BUTTON
+================================= */
+
+.journal-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	min-height: 40px;
+
+	padding: 0 16px;
+
+	border: 1px solid #1f2937;
+	border-radius: 10px;
+
+	background: #111827;
+	color: #d1d5db;
+
+	font-family: inherit;
+	font-size: 14px;
+	font-weight: 600;
+
+	cursor: pointer;
+
+	transition:
+		background 0.15s ease,
+		border-color 0.15s ease,
+		color 0.15s ease,
+		transform 0.1s ease;
+}
+
+
+.journal-button:hover {
+	background: #1f2937;
+	border-color: #374151;
+	color: #ffffff;
+}
+
+
+.journal-button:active {
+	transform: scale(0.97);
+}
+
+.journal-button {
+	position: relative;
+}
+
+
+.journal-button.has-missed-days::after {
+	content: "!";
+
+	position: absolute;
+
+	top: -6px;
+	right: -6px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 18px;
+	height: 18px;
+
+	border-radius: 50%;
+
+	background: #ef4444;
+	color: #ffffff;
+
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 1;
+
+	box-shadow: 0 0 0 2px #0b0f19;
 }
