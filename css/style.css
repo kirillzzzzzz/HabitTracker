@@ -401,3 +401,69 @@ body {
 
 	margin-bottom: 8px;
 }
+
+.journal-calendar-header {
+	text-align: center;
+	margin-bottom: 12px;
+	text-transform: capitalize;
+}
+
+.journal-calendar-weekdays {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: 4px;
+	margin-bottom: 4px;
+}
+
+.journal-calendar-weekday {
+	text-align: center;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.journal-calendar-grid {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: 4px;
+}
+
+.journal-calendar-day {
+	aspect-ratio: 1;
+	border: 0;
+	border-radius: 8px;
+	background: #f3f4f6;
+	cursor: pointer;
+}
+
+.journal-calendar-day.empty {
+	background: transparent;
+	cursor: default;
+}
+
+.journal-calendar-day.future {
+	background: #f3f4f6;
+	cursor: default;
+	opacity: 0.5;
+}
+
+.journal-calendar-day.status-success {
+	background: #22c55e;
+	color: white;
+}
+
+.journal-calendar-day.status-danger {
+	background: #ef4444;
+	color: white;
+}
+
+.journal-calendar-day.status-missed {
+	background: #d1d5db;
+	color: #374151;
+}
+
+.journal-calendar-day span {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}

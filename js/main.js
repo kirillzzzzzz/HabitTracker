@@ -10,6 +10,10 @@ import {
 	getMissedDates
 } from "./journal.js";
 import { renderJournalModal } from "./components/JournalModal.js";
+import { TRACKERS } from "./config.js";
+
+let selectedJournalTrackerId =
+	TRACKERS[0]?.id;
 
 
 const savedApp = loadApp();
@@ -322,13 +326,26 @@ function bindJournalEvents() {
 function openJournalModal() {
 
 	const existingModal =
-		document.querySelector(".journal-modal");
+		document.querySelector(
+			".modal-overlay"
+		);
 
 	if (existingModal) {
 		return;
 	}
 
-	const modal = renderJournalModal(app);
+
+	const modal =
+		renderJournalModal(
+			app,
+			selectedJournalTrackerId
+		);
+
+
+	if (!modal) {
+		return;
+	}
+
 
 	document.body.appendChild(modal);
 
@@ -364,14 +381,38 @@ function bindJournalModalEvents(modal) {
 			"#journal-tracker"
 		);
 
+
 	trackerSelect.addEventListener(
 		"change",
 		event => {
 
+			selectedJournalTrackerId =
+				event.target.value;
+
+
 			console.log(
 				"🧪 JOURNAL TRACKER:",
-				event.target.value
+				JSON.stringify(
+					{
+						trackerId:
+							selectedJournalTrackerId,
+
+						tracker:
+							TRACKERS.find(
+								tracker =>
+									tracker.id ===
+									selectedJournalTrackerId
+							)
+					},
+					null,
+					2
+				)
 			);
+
+
+			closeJournalModal();
+
+			openJournalModal();
 
 		}
 	);

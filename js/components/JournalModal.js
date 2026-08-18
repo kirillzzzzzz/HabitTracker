@@ -1,18 +1,42 @@
 import { TRACKERS } from "../config.js";
+import { renderCalendar } from "./Calendar.js";
 
-export function renderJournalModal(app) {
+export function renderJournalModal(
+	app,
+	selectedTrackerId
+) {
 
-	const trackerOptions = TRACKERS
-		.map(tracker => `
-			<option value="${tracker.id}">
-				${tracker.icon} ${tracker.title}
-			</option>
-		`)
-		.join("");
+	const tracker =
+		TRACKERS.find(
+			tracker =>
+				tracker.id === selectedTrackerId
+		) ?? TRACKERS[0];
 
-	const modal = document.createElement("div");
 
-	modal.className = "modal-overlay";
+	if (!tracker) {
+
+		return null;
+
+	}
+
+
+	const now =
+		new Date();
+
+	const year =
+		now.getFullYear();
+
+	const month =
+		now.getMonth();
+
+
+	const modal =
+		document.createElement("div");
+
+
+	modal.className =
+		"modal-overlay";
+
 
 	modal.innerHTML = `
 
@@ -26,35 +50,49 @@ export function renderJournalModal(app) {
 					class="modal-close"
 					type="button"
 					data-action="close-journal"
+					aria-label="Закрыть журнал"
 				>
 					×
 				</button>
 
 			</div>
 
+
 			<div class="journal-tracker-select">
 
 				<select id="journal-tracker">
 
-					${trackerOptions}
+					${TRACKERS.map(item => `
+
+						<option
+							value="${item.id}"
+							${item.id === tracker.id ? "selected" : ""}
+						>
+							${item.icon}
+							${item.title}
+						</option>
+
+					`).join("")}
 
 				</select>
 
 			</div>
 
+
 			<div class="journal-tabs">
 
 				<button
 					type="button"
-					class="journal-tab active"
+					class="journal-tab"
 					data-month="previous"
 				>
 					Предыдущий месяц
 				</button>
 
+
 				<button
 					type="button"
-					class="journal-tab"
+					class="journal-tab active"
 					data-month="current"
 				>
 					Текущий месяц
@@ -62,29 +100,44 @@ export function renderJournalModal(app) {
 
 			</div>
 
+
 			<div
 				class="journal-calendar"
 				id="journal-calendar"
 			>
+
+				${renderCalendar(
+		app,
+		tracker.id,
+		year,
+		month
+	)}
+
 			</div>
+
 
 			<div class="journal-records">
 
 				<div class="journal-record">
 
-					<span>✓ Подряд</span>
+					<span>
+						✓ Подряд
+					</span>
 
-					<strong id="journal-current-streak">
+					<strong>
 						0
 					</strong>
 
 				</div>
 
+
 				<div class="journal-record">
 
-					<span>🏆 Рекорд</span>
+					<span>
+						🏆 Рекорд
+					</span>
 
-					<strong id="journal-best-streak">
+					<strong>
 						0
 					</strong>
 
@@ -95,6 +148,7 @@ export function renderJournalModal(app) {
 		</div>
 
 	`;
+
 
 	return modal;
 }
