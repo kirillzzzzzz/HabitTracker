@@ -98,6 +98,20 @@ export function getJournalDay(app, date) {
 
 }
 
+export function getOrCreateJournalDay(app, date) {
+
+	const journalDay = getJournalDay(app, date);
+
+	if (journalDay) {
+
+		return structuredClone(journalDay);
+
+	}
+
+	return createDay(date);
+
+}
+
 export function getJournalDates(app) {
 
 	return Object.keys(app.journal)

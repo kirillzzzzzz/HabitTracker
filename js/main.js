@@ -7,7 +7,10 @@ import { setPending, clearPending } from "./pending.js";
 import {
 	ensureCurrentDay, getJournalDates,
 	getJournalDayStatus,
-	getMissedDates
+	getMissedDates,
+	getOrCreateJournalDay,
+	getJournalDay,
+	createDay
 } from "./journal.js";
 import { renderJournalModal } from "./components/JournalModal.js";
 import { TRACKERS } from "./config.js";
@@ -27,6 +30,48 @@ if (savedApp) {
 }
 
 ensureCurrentDay(app);
+
+const testDay = createDay("2026-08-09");
+
+testDay.entries.alcohol.value = false;
+testDay.entries.exercise.value = true;
+testDay.entries.reading.value = null;
+testDay.entries.sleep.value = true;
+
+app.journal["2026-08-09"] =
+	structuredClone(testDay);
+
+saveApp(app);
+
+console.log(
+	"🧪 TEST JOURNAL DAY:",
+	JSON.stringify(
+		app.journal["2026-08-09"],
+		null,
+		2
+	)
+);
+
+console.log(
+	"🧪 EDITOR DAY:",
+	JSON.stringify(
+		testDay,
+		null,
+		2
+	)
+);
+
+console.log(
+	"🧪 JOURNAL DAY SOURCE:",
+	JSON.stringify(
+		getJournalDay(
+			app,
+			"2026-08-09"
+		),
+		null,
+		2
+	)
+);
 
 function commit() {
 
