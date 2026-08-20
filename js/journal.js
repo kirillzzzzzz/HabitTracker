@@ -200,3 +200,10 @@ export function getMissedDates(app) {
 				.every(entry => entry.value === null);
 		});
 }
+
+export function saveJournalDay(app, day) {
+
+	app.journal[day.date] =
+		structuredClone(day);
+
+}
