@@ -1,5 +1,12 @@
 import { TRACKERS } from "../config.js";
 import { renderCalendar } from "./Calendar.js";
+import {
+	getOrCreateJournalDay
+} from "../journal.js";
+
+import {
+	renderDayEditorModal
+} from "./DayEditorModal.js";
 
 export function renderJournalModal(
 	app,
@@ -153,6 +160,47 @@ export function renderJournalModal(
 
 	`;
 
+
+	const calendar =
+		modal.querySelector(
+			"#journal-calendar"
+		);
+
+	calendar.addEventListener(
+		"click",
+		event => {
+
+			const button =
+				event.target.closest(
+					".journal-calendar-day"
+				);
+
+			if (!button) {
+				return;
+			}
+
+			if (button.disabled) {
+				return;
+			}
+
+			const date =
+				button.dataset.date;
+
+			const day =
+				getOrCreateJournalDay(
+					app,
+					date
+				);
+
+			const editorModal =
+				renderDayEditorModal(day);
+
+			document.body.appendChild(
+				editorModal
+			);
+
+		}
+	);
 
 	return modal;
 }

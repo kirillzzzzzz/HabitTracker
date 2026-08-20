@@ -1051,3 +1051,20 @@ body {
 
 	box-shadow: 0 0 0 2px #0b0f19;
 }
+
+.day-editor-action {
+	cursor: pointer;
+}
+
+.day-editor-action.active {
+	color: #ffffff;
+	border-color: currentColor;
+}
+
+.day-editor-success.active {
+	background: #22c55e;
+}
+
+.day-editor-danger.active {
+	background: #ef4444;
+}
