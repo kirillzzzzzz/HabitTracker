@@ -1,7 +1,9 @@
 import { TRACKERS } from "../config.js";
 import { formatDate } from "../date.js";
+import { saveJournalDay } from "../journal.js";
+import { saveApp } from "../storage.js";
 
-export function renderDayEditorModal(day) {
+export function renderDayEditorModal(app, day) {
 
 	const modal =
 		document.createElement("div");
@@ -130,6 +132,32 @@ export function renderDayEditorModal(day) {
 		"click",
 		event => {
 
+			const saveButton =
+				event.target.closest(
+					'[data-action="save-day-editor"]'
+				);
+
+			if (saveButton) {
+
+				saveJournalDay(
+					app,
+					day
+				);
+
+				const saved =
+					saveApp(app);
+
+				if (!saved) {
+
+					return;
+
+				}
+
+				modal.remove();
+
+				return;
+			}
+
 			const button =
 				event.target.closest(
 					".day-editor-action"
@@ -176,6 +204,16 @@ export function renderDayEditorModal(day) {
 
 			day.entries[trackerId].value =
 				nextValue;
+
+			console.log(
+				"🧪 EDITOR VALUE:",
+				JSON.stringify({
+					trackerId,
+					currentValue,
+					nextValue,
+					day
+				}, null, 2)
+			);
 
 			/*
 			 * Обновляем состояние кнопок

@@ -192,11 +192,14 @@ export function renderJournalModal(
 					date
 				);
 
-			const editorModal =
-				renderDayEditorModal(day);
+			const modal =
+				renderDayEditorModal(
+					app,
+					day
+				);
 
 			document.body.appendChild(
-				editorModal
+				modal
 			);
 
 		}
