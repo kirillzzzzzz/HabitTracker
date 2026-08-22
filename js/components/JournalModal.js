@@ -7,10 +7,12 @@ import {
 import {
 	renderDayEditorModal
 } from "./DayEditorModal.js";
+import { getToday } from "../date.js";
 
 export function renderJournalModal(
 	app,
-	selectedTrackerId
+	selectedTrackerId,
+	onSave
 ) {
 
 	const tracker =
@@ -195,7 +197,31 @@ export function renderJournalModal(
 			const modal =
 				renderDayEditorModal(
 					app,
-					day
+					day,
+					(savedDay) => {
+
+						if (savedDay.date === getToday()) {
+
+							app.currentDay =
+								structuredClone(savedDay);
+
+						}
+
+						calendar.innerHTML =
+							renderCalendar(
+								app,
+								tracker.id,
+								year,
+								month
+							);
+
+						if (onSave) {
+
+							onSave(savedDay);
+
+						}
+
+					}
 				);
 
 			document.body.appendChild(

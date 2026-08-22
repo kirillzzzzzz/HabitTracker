@@ -339,7 +339,12 @@ function openJournalModal() {
 	const modal =
 		renderJournalModal(
 			app,
-			selectedJournalTrackerId
+			selectedJournalTrackerId,
+			() => {
+
+				updateUI();
+
+			}
 		);
 
 

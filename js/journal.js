@@ -100,11 +100,25 @@ export function getJournalDay(app, date) {
 
 export function getOrCreateJournalDay(app, date) {
 
-	const journalDay = getJournalDay(app, date);
+	if (date === getToday()) {
+
+		return structuredClone(
+			app.currentDay
+		);
+
+	}
+
+	const journalDay =
+		getJournalDay(
+			app,
+			date
+		);
 
 	if (journalDay) {
 
-		return structuredClone(journalDay);
+		return structuredClone(
+			journalDay
+		);
 
 	}
 

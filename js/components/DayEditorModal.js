@@ -3,7 +3,7 @@ import { formatDate } from "../date.js";
 import { saveJournalDay } from "../journal.js";
 import { saveApp } from "../storage.js";
 
-export function renderDayEditorModal(app, day) {
+export function renderDayEditorModal(app, day, onSave) {
 
 	const modal =
 		document.createElement("div");
@@ -154,6 +154,10 @@ export function renderDayEditorModal(app, day) {
 				}
 
 				modal.remove();
+
+				if (onSave) {
+					onSave(day);
+				}
 
 				return;
 			}
